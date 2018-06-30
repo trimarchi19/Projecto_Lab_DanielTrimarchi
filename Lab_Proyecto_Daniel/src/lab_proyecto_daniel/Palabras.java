@@ -12,6 +12,7 @@ package lab_proyecto_daniel;
 public class Palabras {
     private String palabra;
     private int frecuencia;
+    private int linea;
 
     public Palabras() {
     }
@@ -21,6 +22,21 @@ public class Palabras {
         this.frecuencia = frecuencia;
     }
 
+    public Palabras(String palabra, int frecuencia, int linea) {
+        this.palabra = palabra;
+        this.frecuencia = frecuencia;
+        this.linea = linea;
+    }
+
+    public int getLinea() {
+        return linea;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
+    }
+
+    
     public String getPalabra() {
         return palabra;
     }

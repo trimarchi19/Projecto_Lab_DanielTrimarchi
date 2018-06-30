@@ -151,7 +151,10 @@ public class Gui extends javax.swing.JFrame {
         String dos = "";
         String tres = "";
         String cuatro = "";
-
+        ArrayList<Palabras> words1 = new ArrayList();
+        ArrayList<Palabras> words2 = new ArrayList();
+        ArrayList<Palabras> words3 = new ArrayList();
+        ArrayList<Palabras> words4 = new ArrayList();
         String[] sacapalabras = {"to", "is", "the", "a", "in", "for", "and", "of",
             "c#", "an", "on", "with", "th", "into", "do", "from",
             "el", "los", "la", "de", "or", "is", "for", "it"};
@@ -161,11 +164,6 @@ public class Gui extends javax.swing.JFrame {
             //  frase = "hola ,mundo que,.- hace hola ,mundo que,.- hace";
             StringTokenizer st = new StringTokenizer(frase, " ");
             ArrayList<String> words = new ArrayList();
-            ArrayList<Palabras> words1 = new ArrayList();
-            ArrayList<Palabras> words2 = new ArrayList();
-            ArrayList<Palabras> words3 = new ArrayList();
-            ArrayList<Palabras> words4 = new ArrayList();
-            String first = "";
             int spaces = 1;
             while (st.hasMoreElements()) {
                 String palabra = st.nextToken();
@@ -190,90 +188,82 @@ public class Gui extends javax.swing.JFrame {
                 }
 
             }
-
-            for (int j = 0; j < words.size(); j++) {
-                first = words.get(j);
-                //********************************************
-                //***********************************************
-                int cont = 0;
-                for (int i = 0; i < words.size(); i++) {
-                    if (first.equals(words.get(i))) {
-                        cont++;
-                    }
-                }
-                //*********************************************************************
-                //for que verifica que la palbra ya este o no en el arraylist
+            //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            for (int i = 0; i < words.size(); i++) {
+                String first = words.get(i);
                 boolean existe = false;
-
-                for (int k = 0; k < words1.size(); k++) {
-                    if (words.get(k).equals(first)) {
+                for (int j = 0; j < words1.size(); j++) {
+                    if (words1.get(j).getPalabra().equals(first)) {
                         existe = true;
+                        int frec = words1.get(j).getFrecuencia();
+                        words1.get(j).setFrecuencia(frec + 1);
+
                     }
                 }
                 if (existe == false) {
-                    if (!first.isEmpty()) {
-                        words1.add(new Palabras(first, cont));
-                    }
+                    words1.add(new Palabras(first, 1, l));
                 }
-                //********************************************************************** dos palabras
-                if (j > -1) {
-                    for (int z = j; z < words.size(); z++) {
-                        System.out.println(words);
-                        if (!(words.get(j).equals(words.get(z)))) {
-                            String two = words.get(j) + " " + words.get(z);
-                            boolean existe2 = false;
-                            int cont2 = 0;
-                            for (int i = 0; i < words.size(); i++) {
-                                if (i > 0) {
-
-                                    String podria = words.get(i) + " " + words.get(i - 1);
-                                    String quiza = words.get(i - 1) + " " + words.get(i);
-                                    System.out.println(quiza);
-                                    if (quiza.equals(two)) {
-                                        cont2++;
-                                    }
-                                    if (podria.equals(two)) {
-                                        //cont2++;
-                                        System.out.println("Pasooo");
-                                    }
-
-                                }
-
+            }
+            //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            for (int i = 0; i < words.size(); i++) {
+                for (int k = 0; k < words.size(); k++) {
+                    if (k < i) {
+                        String two = words.get(i) +" "+words.get(k);
+                        boolean existe = false;
+                        for (int j = 0; j < words2.size(); j++) {
+                            String quiza = words2.get(j).getPalabra();
+                            String[] partes =quiza.split(" ");
+                            boolean b1 = two.contains(partes[0]);
+                            boolean b2 = two.contains(partes[1]);
+                            int linea = words2.get(j).getLinea();
+                            if (((b1 && b2) == true) && linea != l) {
+                                    existe = true;
+                                    int frec = words2.get(j).getFrecuencia();
+                                    words2.get(j).setFrecuencia(frec + 1);
                             }
-                            for (int k = 0; k < words2.size(); k++) {
-                                String[] partes = words2.get(k).getPalabra().split(" ");
-                                boolean b1 = two.contains(partes[0]);
-                                boolean b2 = two.contains(partes[1]);
-                                if (two.equals(words2.get(k).getPalabra())) {
-
-                                }
-                                if ((b1 && b2) == true) {
-                                    existe2 = true;
-                                }
-
-                            }
-                            if (existe2 == false) {
-                                if (!two.isEmpty()) {
-                                    if (cont2 == 0) {
-                                        cont2 = 1;
-                                    }
-                                    words2.add(new Palabras(two, cont2));
-                                }
-                            }
+                        }
+                        if (existe == false) {
+                            words2.add(new Palabras(two, 1, l));
                         }
                     }
                 }
-
             }
-            uno += words1 + "\n";
-            dos += words2 + "\n";
-            tres += words3 + "\n";
+            //********************************************************************************
+             for (int z = 0; z < words.size(); z++) {  
+            for (int i = 0; i < words.size(); i++) {
+                for (int k = 0; k < words.size(); k++) {
+                    if (k < i && i<z ) {
+                        String three = words.get(z)+" " +words.get(i) +" "+words.get(k);
+                        boolean existe = false;
+                        for (int j = 0; j < words3.size(); j++) {
+                            String quiza = words3.get(j).getPalabra();
+                            String[] partes =quiza.split(" ");
+                            boolean b1 = three.contains(partes[0]);
+                            boolean b2 = three.contains(partes[1]);
+                            boolean b3 = three.contains(partes[2]);
+                            int linea = words3.get(j).getLinea();
+                            if (((b1 && b2&& b3) == true) && linea != l) {
+                                    existe = true;
+                                    int frec = words3.get(j).getFrecuencia();
+                                    words3.get(j).setFrecuencia(frec + 1);
+                            }
+                        }
+                        if (existe == false) {
+                            words3.add(new Palabras(three, 1, l));
+                        }
+                    }
+                }
+            }
+            }
+            
+              
+
         }
-        System.out.println(uno);
-        System.out.println("");
-        System.out.println(dos);
-        System.out.println("---------------------------------------------------------------------------------------------------");
-        System.out.println(tres);
+        System.out.println(words1);
+        System.out.println("---------------------------------------------");
+        System.out.println(words2);
+        System.out.println("--------------------------------------------");
+        System.out.println(words3);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
@@ -398,6 +388,54 @@ public void texto() {
                                         cont3 = 1;
                                     }
                                     words3.add(new Palabras(three, cont3));
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+
+                if (j > -1) {
+                    for (int z = j; z < words.size(); z++) {
+                        System.out.println(words);
+                        if (!(words.get(j).equals(words.get(z)))) {
+                            String two = words.get(j) + " " + words.get(z);
+                            boolean existe2 = false;
+                            int cont2 = 0;
+                            for (int i = 0; i < words.size(); i++) {
+                                if (i + 1 < words.size()) {
+                                    String podria = words.get(i) + " " + words.get(i + 1);
+                                    String quiza = words.get(i + 1) + " " + words.get(i);
+                                    System.out.println(quiza);
+                                    if (quiza.equals(two)) {
+                                        cont2++;
+                                    }
+
+                                }
+
+                            }
+                            for (int k = 0; k < words2.size(); k++) {
+                                String[] partes = words2.get(k).getPalabra().split(" ");
+                                boolean b1 = two.contains(partes[0]);
+                                boolean b2 = two.contains(partes[1]);
+                                if (two.equals(words2.get(k).getPalabra())) {
+
+                                }
+                                if ((b1 && b2) == true) {
+                                    existe2 = true;
+                                }
+
+                            }
+                            if (existe2 == false) {
+                                if (!two.isEmpty()) {
+                                    if (cont2 == 0) {
+                                        cont2 = 1;
+                                    }
+                                    words2.add(new Palabras(two, cont2));
                                 }
                             }
                         }
