@@ -42,6 +42,8 @@ public class Gui extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_1 = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        arreglado = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -71,15 +73,25 @@ public class Gui extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Archivo", jPanel1);
 
+        arreglado.setColumns(20);
+        arreglado.setRows(5);
+        jScrollPane2.setViewportView(arreglado);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Texto Arreglado", jPanel2);
@@ -119,6 +131,7 @@ public class Gui extends javax.swing.JFrame {
         FileReader fr = null;
         BufferedReader br = null;
         ta_1.setText("");
+        arreglado.setText("");
         try {
             JFileChooser jfc = new JFileChooser();
             FileNameExtensionFilter filtro
@@ -272,7 +285,7 @@ public class Gui extends javax.swing.JFrame {
         topten.addAll(words2);
         topten.addAll(words3);
         Collections.sort(ultimo);
-        for (int z = 0;z< topten.size(); z++) {
+        for (int z = 0; z < topten.size(); z++) {
             for (int k = 0; k < topten.size(); k++) {
                 for (int i = 0; i < topten.size(); i++) {
                     for (int j = 0; j < topten.size(); j++) {
@@ -286,10 +299,19 @@ public class Gui extends javax.swing.JFrame {
                 }
             }
         }
+        arreglado.append("****************Top Ten De Frecuencias**************\n");
+        arreglado.append("");
+        for (int i = 0; i < 10; i++) {
+            arreglado.append(topten.get(i).toString() + "");
+        }
+        arreglado.append("\n");
+        arreglado.append("**************** Combinaciones Encontradas*****************\n");
+        arreglado.append("");
+        for (int i = 0; i < ultimo.size(); i++) {
+            arreglado.append(ultimo.get(i).toString() + "");
+        }
 
-        System.out.println("------------------------------------------------------------");
-        System.out.println(topten);
-        
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
@@ -336,12 +358,14 @@ public class Gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea arreglado;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea ta_1;
     // End of variables declaration//GEN-END:variables
