@@ -55,7 +55,7 @@ public class Palabras {
 
     @Override
     public String toString() {
-        return palabra + ":=" + frecuencia;
+        return palabra + ": " + frecuencia+"\n";
     }
     
 }

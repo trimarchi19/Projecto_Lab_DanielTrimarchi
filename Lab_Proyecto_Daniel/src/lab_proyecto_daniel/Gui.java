@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -207,19 +208,19 @@ public class Gui extends javax.swing.JFrame {
             //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             for (int i = 0; i < words.size(); i++) {
                 for (int k = 0; k < words.size(); k++) {
-                    if (k < i) {
-                        String two = words.get(i) +" "+words.get(k);
+                    if (k > i) {
+                        String two = words.get(i) + " " + words.get(k);
                         boolean existe = false;
                         for (int j = 0; j < words2.size(); j++) {
                             String quiza = words2.get(j).getPalabra();
-                            String[] partes =quiza.split(" ");
+                            String[] partes = quiza.split(" ");
                             boolean b1 = two.contains(partes[0]);
                             boolean b2 = two.contains(partes[1]);
                             int linea = words2.get(j).getLinea();
                             if (((b1 && b2) == true) && linea != l) {
-                                    existe = true;
-                                    int frec = words2.get(j).getFrecuencia();
-                                    words2.get(j).setFrecuencia(frec + 1);
+                                existe = true;
+                                int frec = words2.get(j).getFrecuencia();
+                                words2.get(j).setFrecuencia(frec + 1);
                             }
                         }
                         if (existe == false) {
@@ -229,41 +230,66 @@ public class Gui extends javax.swing.JFrame {
                 }
             }
             //********************************************************************************
-             for (int z = 0; z < words.size(); z++) {  
-            for (int i = 0; i < words.size(); i++) {
-                for (int k = 0; k < words.size(); k++) {
-                    if (k < i && i<z ) {
-                        String three = words.get(z)+" " +words.get(i) +" "+words.get(k);
-                        boolean existe = false;
-                        for (int j = 0; j < words3.size(); j++) {
-                            String quiza = words3.get(j).getPalabra();
-                            String[] partes =quiza.split(" ");
-                            boolean b1 = three.contains(partes[0]);
-                            boolean b2 = three.contains(partes[1]);
-                            boolean b3 = three.contains(partes[2]);
-                            int linea = words3.get(j).getLinea();
-                            if (((b1 && b2&& b3) == true) && linea != l) {
+            for (int z = 0; z < words.size(); z++) {
+                for (int i = 0; i < words.size(); i++) {
+                    for (int k = 0; k < words.size(); k++) {
+                        if (k > i && i > z) {
+                            String three = words.get(z) + " " + words.get(i) + " " + words.get(k);
+                            boolean existe = false;
+                            for (int j = 0; j < words3.size(); j++) {
+                                String quiza = words3.get(j).getPalabra();
+                                String[] partes = quiza.split(" ");
+                                boolean b1 = three.contains(partes[0]);
+                                boolean b2 = three.contains(partes[1]);
+                                boolean b3 = three.contains(partes[2]);
+                                int linea = words3.get(j).getLinea();
+                                if (((b1 && b2 && b3) == true) && linea != l) {
                                     existe = true;
                                     int frec = words3.get(j).getFrecuencia();
                                     words3.get(j).setFrecuencia(frec + 1);
+                                }
                             }
-                        }
-                        if (existe == false) {
-                            words3.add(new Palabras(three, 1, l));
+                            if (existe == false) {
+                                words3.add(new Palabras(three, 1, l));
+                            }
                         }
                     }
                 }
             }
-            }
-            
-              
-
         }
-        System.out.println(words1);
-        System.out.println("---------------------------------------------");
-        System.out.println(words2);
-        System.out.println("--------------------------------------------");
-        System.out.println(words3);
+        ArrayList ultimo = new ArrayList<>();
+        ArrayList<Palabras> topten = new ArrayList();
+        for (int i = 0; i < words1.size(); i++) {
+            ultimo.add(words1.get(i).toString());
+        }
+        for (int i = 0; i < words2.size(); i++) {
+            ultimo.add(words2.get(i).toString());
+        }
+        for (int i = 0; i < words3.size(); i++) {
+            ultimo.add(words3.get(i).toString());
+        }
+        topten.addAll(words1);
+        topten.addAll(words2);
+        topten.addAll(words3);
+        Collections.sort(ultimo);
+        for (int z = 0;z< topten.size(); z++) {
+            for (int k = 0; k < topten.size(); k++) {
+                for (int i = 0; i < topten.size(); i++) {
+                    for (int j = 0; j < topten.size(); j++) {
+                        Palabras p = topten.get(j);
+                        Palabras h = topten.get(i);
+                        if (p.getFrecuencia() < h.getFrecuencia()) {
+                            topten.remove(j);
+                            topten.add(i, p);
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("------------------------------------------------------------");
+        System.out.println(topten);
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
