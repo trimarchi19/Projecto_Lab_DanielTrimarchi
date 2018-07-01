@@ -126,6 +126,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        try{
         ArrayList<String> lineas = new ArrayList();
         File fichero = null;
         FileReader fr = null;
@@ -311,7 +312,9 @@ public class Gui extends javax.swing.JFrame {
             arreglado.append(ultimo.get(i).toString() + "");
         }
 
-
+        }catch(Exception e){
+            
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
